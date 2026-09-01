@@ -1,0 +1,5 @@
+_name: pendulum
+gym_id: Pendulum-v1
+total_timesteps: 300000
+num_envs: 1
+iterations: 10

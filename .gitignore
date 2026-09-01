@@ -23,7 +23,6 @@ lib/
 lib64/
 parts/
 sdist/
-var/
 wheels/
 share/python-wheels/
 *.egg-info/
@@ -158,16 +157,7 @@ ml-agents/
 3rd_party/workers/marllib_worker/marllib_worker/__pycache__
 3rd_party/workers/marllib_worker/**/__pycache__/
 
-# =============================================================================
-# Deprecated / Legacy Directories
-# =============================================================================
 
-cleanrl/
-coach/
-ray/
-SuperSuit/
-Vesna_RL/
-.fake/
 # =============================================================================
 # GitHub / CI
 # =============================================================================
@@ -202,9 +192,6 @@ _vizdoom.ini
 # =============================================================================
 # Development Progress (internal documentation - not for public release)
 # =============================================================================
-
-# Paper drafts — related_papers/RLlib excluded
-docs/my_paper/related_papers/RLlib_Abstractions_for_Distributed_Reinforcement_Learning/
 
 # Internal development docs (not for public release)
 docs/Development_Progress/
@@ -308,10 +295,15 @@ results/
 .ruff_cache/
 
 
-3rd_party/benchmarks/workers_benchmark/papers/*
+!3rd_party/benchmarks/workers_benchmark/configs/env
 
-3rd_party/environments/RPM_Generalizable_Behaviors_in_Multi_Agent_Reinforcement_Learning
 
-3rd_party/benchmarks/*
 
-3rd_party/benchmarks
+# Benchmarks
+!var/frameworks/*
+var/frameworks/benchmarks/native
+var/frameworks/benchmarks/fastlane
+var/frameworks/benchmarks/.hydra_snapshots
+var/frameworks/benchmarks/.hydra_snapshots/multirun
+var/frameworks/benchmarks/sweep_logs
+var/frameworks/benchmarks/worker

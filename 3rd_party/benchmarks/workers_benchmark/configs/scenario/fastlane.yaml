@@ -1,0 +1,4 @@
+_name: fastlane
+module_suffix: fastlane
+env_vars:
+  GYM_GUI_FASTLANE_ONLY: "1"

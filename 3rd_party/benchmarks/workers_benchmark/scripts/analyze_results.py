@@ -26,12 +26,31 @@ DISPLAY = {
 }
 
 
-def load_results(results_dir: Path) -> List[Dict[str, Any]]:
+def load_results(results_dir: Path, include_reference: bool = False) -> List[Dict[str, Any]]:
+    """Load JSONs from either the new scenario-partitioned layout or the legacy flat layout.
+
+    New layout: <results_dir>/{native,worker,fastlane}/*.json
+    Legacy flat layout: <results_dir>/*.json
+
+    Reference JSONs (*.reference.json) are the frozen pre-migration baseline and are
+    skipped by default. Pass include_reference=True to include them.
+    """
     if not results_dir.exists():
         print(f"Results directory not found: {results_dir}")
         return []
+
+    scenario_dirs = [results_dir / s for s in ("native", "worker", "fastlane")]
+    if any(d.is_dir() for d in scenario_dirs):
+        json_files = sorted(
+            f for d in scenario_dirs if d.is_dir() for f in d.glob("*.json")
+        )
+    else:
+        json_files = sorted(results_dir.glob("*.json"))
+
     results = []
-    for f in sorted(results_dir.glob("*.json")):
+    for f in json_files:
+        if not include_reference and ".reference" in f.name:
+            continue
         try:
             with open(f) as fp:
                 results.append(json.load(fp))
@@ -272,12 +291,19 @@ def plot_results(results: List[Dict[str, Any]], output_dir: Path):
 def main():
     import argparse
     parser = argparse.ArgumentParser(description="Analyze benchmark results")
-    parser.add_argument("--results-dir", type=Path,
-                        default=Path(__file__).parent.parent / "results")
+    parser.add_argument(
+        "--results-dir", type=Path,
+        default=Path("/home/hamid/Desktop/software/mosaic/var/frameworks/benchmarks"),
+        help="Root results directory (new layout: contains native/, worker/, fastlane/ subdirs).",
+    )
     parser.add_argument("--plot", action="store_true", help="Generate plots")
+    parser.add_argument(
+        "--include-reference", action="store_true",
+        help="Include *.reference.json (pre-migration frozen baselines) in the analysis.",
+    )
     args = parser.parse_args()
 
-    results = load_results(args.results_dir)
+    results = load_results(args.results_dir, include_reference=args.include_reference)
     analyze(results)
 
     if args.plot:

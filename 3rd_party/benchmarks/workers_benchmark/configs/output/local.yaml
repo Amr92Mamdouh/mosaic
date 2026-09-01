@@ -1,0 +1,2 @@
+_name: local
+root: ${hydra:runtime.cwd}/3rd_party/benchmarks/workers_benchmark/results

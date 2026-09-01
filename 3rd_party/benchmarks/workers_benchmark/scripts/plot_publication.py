@@ -43,10 +43,24 @@ C_FASTLANE = '#1B5E9E'    # deep blue
 C_FASTLANE_GYM = '#D4763A'  # warm orange (gymnasium FastLane, distinct)
 
 
-def load_results(results_dir, env_filter=None):
-    """Load and group results, optionally filtering by env_id."""
+def load_results(results_dir, env_filter=None, include_reference=False):
+    """Load and group results, optionally filtering by env_id.
+
+    Handles both the new scenario-partitioned layout (<results_dir>/{native,worker,fastlane}/)
+    and the legacy flat layout. Skips *.reference.json by default (frozen pre-migration baselines).
+    """
+    scenario_dirs = [results_dir / s for s in ("native", "worker", "fastlane")]
+    if any(d.is_dir() for d in scenario_dirs):
+        json_files = sorted(
+            f for d in scenario_dirs if d.is_dir() for f in d.glob('*.json')
+        )
+    else:
+        json_files = sorted(results_dir.glob('*.json'))
+
     results = []
-    for f in sorted(results_dir.glob('*.json')):
+    for f in json_files:
+        if not include_reference and '.reference' in f.name:
+            continue
         try:
             with open(f) as fp:
                 r = json.load(fp)
@@ -305,16 +319,24 @@ def plot_overhead_horizontal(stats, output_path):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--results-dir', type=Path,
-                        default=Path(__file__).parent.parent / 'results')
+    parser.add_argument(
+        '--results-dir', type=Path,
+        default=Path("/home/hamid/Desktop/software/mosaic/var/frameworks/benchmarks"),
+        help='Root results directory (new layout: contains native/, worker/, fastlane/ subdirs).',
+    )
     parser.add_argument('--env', default='CartPole-v1')
     parser.add_argument('--timesteps', type=int, default=100000)
+    parser.add_argument(
+        '--include-reference', action='store_true',
+        help='Include *.reference.json (pre-migration frozen baselines) in the plots.',
+    )
     args = parser.parse_args()
 
     plots_dir = args.results_dir / 'plots'
     plots_dir.mkdir(parents=True, exist_ok=True)
 
-    grouped = load_results(args.results_dir, env_filter=args.env)
+    grouped = load_results(args.results_dir, env_filter=args.env,
+                           include_reference=args.include_reference)
     stats = compute_stats(grouped)
 
     if not stats:

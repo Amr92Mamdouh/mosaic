@@ -29,13 +29,7 @@ Three scenarios per framework:
 
 ```bash
 # From the mosaic root directory
-cd /path/to/mosaic
-
-# Activate the virtual environment
-source .venv/bin/activate
-
-# Set PYTHONPATH so all worker packages are importable
-export PYTHONPATH="3rd_party/benchmarks:3rd_party/workers/cleanrl_worker:3rd_party/workers/ray_worker:3rd_party/workers/xuance_worker:3rd_party/workers/xuance_worker/xuance:$PYTHONPATH"
+export PYTHONPATH="3rd_party/benchmarks:$PYTHONPATH"
 ```
 
 ### Per-worker dependencies
@@ -43,7 +37,7 @@ export PYTHONPATH="3rd_party/benchmarks:3rd_party/workers/cleanrl_worker:3rd_par
 Each worker has its own requirements file in `requirements/`:
 
 ```bash
-pip install -r requirements/base.txt           # shared deps
+pip install -r requirements/base.txt           # shared deps (includes hydra-core, omegaconf)
 pip install -r requirements/cleanrl_worker.txt  # CleanRL
 pip install -r requirements/ray_worker.txt      # Ray/RLlib
 # ... etc.
@@ -58,27 +52,52 @@ pip install -r requirements/ray_worker.txt      # Ray/RLlib
 
 ## Running benchmarks
 
-### Single worker (recommended starting point)
+The sole entry point is `workers_benchmark.train`, driven by
+[Hydra](https://hydra.cc/) configuration. Every run saves a
+`.hydra/config.yaml` snapshot alongside the result JSON, making
+results fully reproducible from config alone.
+
+### Single run
 
 ```bash
-# Run all 3 scenarios (native/worker/fastlane) x 5 seeds for CleanRL
-python -m workers_benchmark worker cleanrl --env cartpole --seed 42
+# CleanRL, native scenario, CartPole, seed 42
+python -m workers_benchmark.train worker=cleanrl scenario=native env=cartpole seed=42
 
-# Quick smoke test (10K steps, 3 iterations)
-python -m workers_benchmark worker cleanrl --env quick_test
+# Quick smoke test (10 K steps, 3 iterations, ~5 s)
+python -m workers_benchmark.train worker=cleanrl scenario=native env=quick_test
 ```
 
-### All 9 workers
+### Grid sweep (all scenarios for one worker)
 
 ```bash
-python -m workers_benchmark all --env cartpole --seed 42
+python -m workers_benchmark.train -m \
+  worker=cleanrl \
+  scenario=native,worker,fastlane \
+  env=cartpole \
+  seed=42
 ```
 
-### Individual worker scripts
+### Full 9-worker matrix
 
 ```bash
-python -m workers_benchmark.scripts.run_worker cleanrl --env cartpole --seed 42
-python -m workers_benchmark.scripts.run_worker ray --env cartpole --seed 42
+python -m workers_benchmark.train -m \
+  worker=cleanrl,xuance,ray,tianshou,sb3,sbx,torchrl,rltools,jumanji \
+  scenario=native,worker,fastlane \
+  env=cartpole \
+  seed=42
+```
+
+### Override individual config values
+
+```bash
+# Increase total timesteps for one run
+python -m workers_benchmark.train worker=cleanrl env.total_timesteps=500000
+
+# Change output root
+python -m workers_benchmark.train worker=cleanrl output=local
+
+# Combine overrides
+python -m workers_benchmark.train worker=sb3 scenario=fastlane env=pendulum seed=1
 ```
 
 ## Analyzing results
@@ -86,27 +105,32 @@ python -m workers_benchmark.scripts.run_worker ray --env cartpole --seed 42
 ### Summary tables
 
 ```bash
-python -m workers_benchmark analyze --plot
+python -m workers_benchmark.scripts.analyze_results \
+  --results-dir /path/to/mosaic/var/frameworks/benchmarks
 ```
 
-Prints per-worker overhead tables and cross-worker native comparison,
-then generates PNG plots in `results/plots/`.
+Prints per-worker overhead tables and cross-worker native comparison.
 
 ### Publication charts
 
 ```bash
-python -m workers_benchmark.scripts.plot_publication --env CartPole-v1
+python -m workers_benchmark.scripts.plot_publication \
+  --results-dir /path/to/mosaic/var/frameworks/benchmarks \
+  --env CartPole-v1
 ```
 
 Generates:
-- `results/plots/combined_overhead.png` -- all frameworks side by side
-- `results/plots/overhead_ratios.png` -- horizontal overhead ratio bars
+- `var/frameworks/benchmarks/plots/combined_overhead.png`: all frameworks side by side
+- `var/frameworks/benchmarks/plots/overhead_ratios.png`: horizontal overhead ratio bars
 
-### Per-worker charts
+To include pre-migration frozen baselines in the plot:
 
-Generated automatically by `analyze --plot`:
-- `results/plots/{worker}_overhead.png` -- native vs worker vs fastlane
-- `results/plots/native_comparison.png` -- all frameworks native only
+```bash
+python -m workers_benchmark.scripts.plot_publication \
+  --results-dir /path/to/mosaic/var/frameworks/benchmarks \
+  --env CartPole-v1 \
+  --include-reference
+```
 
 ## Environment presets
 
@@ -126,72 +150,108 @@ Generated automatically by `analyze --plot`:
 
 ## Output files
 
-### JSON (one file per run)
-
-Naming: `{worker}_{scenario}_{env}_i{iteration}.json`
-
-```
-results/
-  cleanrl_native_CartPole_v1_i1.json
-  cleanrl_worker_CartPole_v1_i1.json
-  cleanrl_fastlane_CartPole_v1_i1.json
-  ...
-```
-
-### CSV (one file per worker)
-
-Naming: `{worker}_benchmark.csv`
-
-Columns: `worker, scenario, iteration, seed, env_id, total_timesteps,
-num_envs, wall_time_s, steps_per_second, peak_memory_mb`
-
-### PNG plots
+Results land under `var/frameworks/benchmarks/` (configurable via `output=var`
+or `output=local`):
 
 ```
-results/plots/
-  combined_overhead.png      # all frameworks, 3 bars each
-  overhead_ratios.png        # horizontal ratio bars
-  native_comparison.png      # native-only ranking
-  cleanrl_overhead.png       # per-worker detail
-  ray_overhead.png
-  ...
+var/frameworks/benchmarks/
+  native/
+    cleanrl_native_CartPole_v1_i1.json
+    cleanrl_native_CartPole_v1_i2.json
+    ...
+  worker/
+    cleanrl_worker_CartPole_v1_i1.json
+    ...
+  fastlane/
+    cleanrl_fastlane_CartPole_v1_i1.json
+    ...
+  plots/
+    combined_overhead.png
+    overhead_ratios.png
+  .hydra_snapshots/
+    multirun/YYYY-MM-DD/HH-MM-SS/
+      cleanrl_native_cartpole_seed42/
+        .hydra/config.yaml      # full resolved config snapshot
+        .hydra/overrides.yaml   # CLI overrides used
+```
+
+Each JSON contains:
+
+```json
+{
+  "worker_name": "cleanrl",
+  "scenario": "native",
+  "env_id": "CartPole-v1",
+  "total_timesteps": 100000,
+  "wall_time_seconds": 32.1,
+  "steps_per_second": 3115,
+  "peak_memory_mb": 312.4,
+  "seed": 42,
+  "num_envs": 4,
+  "iteration": 1,
+  "timestamp": "2026-08-31 10:21:49"
+}
 ```
 
 ## Reproducing results from scratch
 
 ```bash
-# 1. Set up environment
-source .venv/bin/activate
-export PYTHONPATH="3rd_party/benchmarks:3rd_party/workers/cleanrl_worker:3rd_party/workers/ray_worker:3rd_party/workers/xuance_worker:3rd_party/workers/xuance_worker/xuance:$PYTHONPATH"
+# 1. Set PYTHONPATH from mosaic root
+export PYTHONPATH="3rd_party/benchmarks:$PYTHONPATH"
 
-# 2. Clear old results (optional)
-rm -f 3rd_party/benchmarks/workers_benchmark/results/*.json
-rm -f 3rd_party/benchmarks/workers_benchmark/results/*.csv
+# 2. Run the full matrix (single seed, 5 iterations each)
+python -m workers_benchmark.train -m \
+  worker=cleanrl,xuance,ray,tianshou,sb3,sbx,torchrl,rltools,jumanji \
+  scenario=native,worker,fastlane \
+  env=cartpole \
+  seed=42
 
-# 3. Run all workers
-python -m workers_benchmark all --env cartpole --seed 42
-
-# 4. Generate publication charts
-python -m workers_benchmark.scripts.plot_publication --env CartPole-v1
-
-# 5. Generate analysis + per-worker charts
-python -m workers_benchmark analyze --plot
+# 3. Generate publication charts
+python -m workers_benchmark.scripts.plot_publication \
+  --results-dir var/frameworks/benchmarks \
+  --env CartPole-v1
 ```
 
-**Estimated time**: ~3 hours for all 9 workers on a 4-core machine with
-16 GB RAM. Ray/RLlib is the slowest (~25 min for 5 seeds x 3 scenarios).
+**Estimated time**: ~2 hours for 7 functional workers on a 4-core machine
+with 16 GB RAM. Ray/RLlib is the slowest (~15 min for 3 scenarios).
 
 ## Directory structure
 
 ```
 workers_benchmark/
-  __main__.py                 # CLI entry (python -m workers_benchmark)
+  train.py                    # Hydra entry point (python -m workers_benchmark.train)
+  structured_configs.py       # Dataclass schemas registered with ConfigStore
   utils.py                    # BenchmarkResult, BenchmarkTimer, run_subprocess_timed
   configs/
-    common.py                 # BenchmarkConfig dataclass, environment presets
+    config.yaml               # Root config with defaults list
+    worker/
+      cleanrl.yaml            # _target_: workers_benchmark.benchmarks.cleanrl.dispatch.run
+      xuance.yaml
+      ray.yaml
+      tianshou.yaml
+      sb3.yaml
+      sbx.yaml
+      torchrl.yaml
+      rltools.yaml
+      jumanji.yaml
+    scenario/
+      native.yaml
+      worker.yaml
+      fastlane.yaml           # sets GYM_GUI_FASTLANE_ONLY=1
+    env/
+      quick_test.yaml
+      cartpole.yaml
+      pendulum.yaml
+    output/
+      var.yaml                # root: var/frameworks/benchmarks (default)
+      local.yaml              # root: 3rd_party/benchmarks/workers_benchmark/results
   benchmarks/
     __init__.py               # AVAILABLE_WORKERS list
-    cleanrl/                  # native.py, worker.py, fastlane.py
+    cleanrl/
+      dispatch.py             # routes to native.py / worker.py / fastlane.py
+      native.py
+      worker.py
+      fastlane.py
     xuance/
     ray/
     tianshou/
@@ -201,22 +261,57 @@ workers_benchmark/
     rltools/
     jumanji/
   scripts/
-    run_worker.py             # Orchestrate 1 worker x 3 scenarios x N seeds
-    run_all.py                # Orchestrate all 9 workers
-    analyze_results.py        # Load JSONs, compute stats, plot
-    plot_publication.py        # Publication-quality combined charts
+    analyze_results.py        # Load JSONs, compute stats, print tables
+    plot_publication.py       # Publication-quality combined charts
     compare_workers.py        # Multi-subplot comparison
     compare_workers_lines.py  # Line graphs across iterations
-  results/
-    *.json                    # Individual run results
-    *.csv                     # Per-worker and combined CSVs
-    plots/                    # Generated PNG charts
+  tests/
+    test_structured_configs.py
+    test_cleanrl_dispatch.py
+    test_*_dispatch.py        # one per worker
 ```
 
 ## Adding a new worker
 
 1. Create `benchmarks/<name>/` with `__init__.py`, `native.py`,
    `worker.py`, `fastlane.py`.
-2. Each file exports a `run_{scenario}_benchmark(config) -> BenchmarkResult`.
-3. Add the worker name to `AVAILABLE_WORKERS` in `benchmarks/__init__.py`.
-4. See `benchmarks/cleanrl/` as reference.
+2. Each scenario file exports a `run_{scenario}_benchmark(...)` function
+   returning a `BenchmarkResult`.
+3. Create `benchmarks/<name>/dispatch.py` following this pattern:
+
+   ```python
+   from __future__ import annotations
+
+   def run(worker_cfg, scenario_cfg, env_cfg, output_cfg, seed: int):
+       if scenario_cfg._name == "native":
+           from .native import run_native_benchmark as fn
+       elif scenario_cfg._name == "worker":
+           from .worker import run_worker_benchmark as fn
+       elif scenario_cfg._name == "fastlane":
+           from .fastlane import run_fastlane_benchmark as fn
+       else:
+           raise ValueError(f"unknown scenario: {scenario_cfg._name}")
+       return fn(
+           env_id=env_cfg.gym_id,
+           total_timesteps=env_cfg.total_timesteps,
+           num_envs=env_cfg.num_envs,
+           seed=seed,
+           iterations=env_cfg.iterations,
+       )
+
+   __all__ = ["run"]
+   ```
+
+4. Add `configs/worker/<name>.yaml`:
+
+   ```yaml
+   _name: <name>
+   _target_: workers_benchmark.benchmarks.<name>.dispatch.run
+   supports:
+     scenarios: [native, worker, fastlane]
+   timeout_s: 3600
+   extra_env: {}
+   ```
+
+5. Add the worker name to `AVAILABLE_WORKERS` in `benchmarks/__init__.py`.
+6. See `benchmarks/cleanrl/` as the reference implementation.
