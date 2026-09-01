@@ -1,0 +1,7 @@
+_name: jumanji
+_target_: workers_benchmark.benchmarks.jumanji.dispatch.run
+supports:
+  scenarios: [native, worker, fastlane]
+timeout_s: 3600
+extra_env:
+  XLA_PYTHON_CLIENT_PREALLOCATE: "false"

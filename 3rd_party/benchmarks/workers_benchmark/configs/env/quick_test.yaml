@@ -1,0 +1,5 @@
+_name: quick_test
+gym_id: CartPole-v1
+total_timesteps: 10000
+num_envs: 1
+iterations: 3

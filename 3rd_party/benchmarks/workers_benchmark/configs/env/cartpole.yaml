@@ -1,0 +1,5 @@
+_name: cartpole
+gym_id: CartPole-v1
+total_timesteps: 100000
+num_envs: 4
+iterations: 5

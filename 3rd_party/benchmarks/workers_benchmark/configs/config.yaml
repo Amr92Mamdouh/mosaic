@@ -1,0 +1,18 @@
+defaults:
+  - worker: cleanrl
+  - scenario: native
+  - env: quick_test
+  - output: var
+  - _self_
+
+seed: 42
+log_level: INFO
+
+hydra:
+  run:
+    dir: ${output.root}/.hydra_snapshots/${now:%Y-%m-%d}/${now:%H-%M-%S}_${worker._name}_${scenario._name}_${env._name}_seed${seed}
+  sweep:
+    dir: ${output.root}/.hydra_snapshots/multirun/${now:%Y-%m-%d}/${now:%H-%M-%S}
+    subdir: ${worker._name}_${scenario._name}_${env._name}_seed${seed}
+  job:
+    chdir: false

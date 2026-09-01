@@ -1,0 +1,6 @@
+_name: cleanrl
+_target_: workers_benchmark.benchmarks.cleanrl.dispatch.run
+supports:
+  scenarios: [native, worker, fastlane]
+timeout_s: 3600
+extra_env: {}

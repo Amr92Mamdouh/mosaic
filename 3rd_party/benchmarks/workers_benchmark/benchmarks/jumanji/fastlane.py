@@ -55,7 +55,7 @@ def run_fastlane_gymnax_benchmark(config) -> BenchmarkResult:
 
     result = BenchmarkResult(
         worker_name="jumanji",
-        scenario="fastlane_gymnax",
+        scenario=config.scenario,
         env_id=config.env_id,
         total_timesteps=config.total_timesteps,
         wall_time_seconds=elapsed,
@@ -103,7 +103,7 @@ def run_fastlane_gymnasium_benchmark(config) -> BenchmarkResult:
 
     result = BenchmarkResult(
         worker_name="jumanji",
-        scenario="fastlane_gym",
+        scenario=config.scenario,
         env_id=config.env_id,
         total_timesteps=config.total_timesteps,
         wall_time_seconds=elapsed,
