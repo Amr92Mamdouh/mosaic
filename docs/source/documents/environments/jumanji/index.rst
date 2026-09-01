@@ -4,10 +4,23 @@ Jumanji
 JAX-based hardware-accelerated environments from Google DeepMind.  Organised
 into logic puzzles, packing problems, and routing tasks.
 
-:Install: ``pip install -e ".[jumanji]"``
-:Paradigm: Single-agent
-:Stepping: ``SINGLE_AGENT``
-:Note: Requires JAX with compatible hardware backend (CPU/GPU/TPU)
+.. list-table::
+   :widths: 20 80
+   :header-rows: 0
+
+   * - **Paradigm**
+     - Single-agent
+   * - **Stepping**
+     - ``SINGLE_AGENT``
+   * - **Note**
+     - Requires JAX with compatible hardware backend (CPU/GPU/TPU)
+
+Installation
+------------
+
+.. code-block:: bash
+
+   pip install -e ".[jumanji]"
 
 .. list-table::
    :header-rows: 1

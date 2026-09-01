@@ -12,10 +12,23 @@ Melting Pot
 Multi-agent social scenario benchmark from Google DeepMind.  Tests cooperation,
 competition, deception, and trust with up to 16 agents.
 
-:Install: ``pip install -e ".[meltingpot]"``
-:Paradigm: Multi-agent (simultaneous)
-:Stepping: ``SIMULTANEOUS``
-:Note: Linux/macOS only
+.. list-table::
+   :widths: 20 80
+   :header-rows: 0
+
+   * - **Paradigm**
+     - Multi-agent (simultaneous)
+   * - **Stepping**
+     - ``SIMULTANEOUS``
+   * - **Note**
+     - Linux/macOS only
+
+Installation
+------------
+
+.. code-block:: bash
+
+   pip install -e ".[meltingpot]"
 
 .. list-table::
    :header-rows: 1

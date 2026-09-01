@@ -3,9 +3,21 @@ RWARE (Robotic Warehouse)
 
 Cooperative multi-agent shelf delivery in a simulated warehouse.
 
-:Install: ``pip install -e 3rd_party/environments/robotic-warehouse/``
-:Paradigm: Multi-agent (simultaneous)
-:Stepping: ``SIMULTANEOUS``
+.. list-table::
+   :widths: 20 80
+   :header-rows: 0
+
+   * - **Paradigm**
+     - Multi-agent (simultaneous)
+   * - **Stepping**
+     - ``SIMULTANEOUS``
+
+Installation
+------------
+
+.. code-block:: bash
+
+   pip install -e 3rd_party/environments/robotic-warehouse/
 
 .. list-table::
    :header-rows: 1
@@ -21,6 +33,15 @@ Cooperative multi-agent shelf delivery in a simulated warehouse.
      - Medium warehouse (also easy/hard reward variants)
    * - rware-large-4ag/8ag-v2
      - Large warehouse (also hard reward variants)
+
+.. figure:: /images/envs/rware/rware_size_variations.png
+   :width: 100%
+   :alt: RWARE size variations
+
+   Three size variations of the multi-robot warehouse environment:
+   (a) tiny / two agents, (b) small / two agents, (c) medium / four agents.
+   Shelves (purple), requested shelves (teal), goal locations (dark), agents
+   (orange), and an agent carrying a shelf (red).
 
 Citation
 --------

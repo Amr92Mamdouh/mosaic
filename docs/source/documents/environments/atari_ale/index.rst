@@ -11,10 +11,23 @@ Atari / ALE
 
 128 classic Atari 2600 games via the Arcade Learning Environment.
 
-:Install: ``pip install -e ".[atari]"``
-:Paradigm: Single-agent
-:Stepping: ``SINGLE_AGENT``
-:Note: Requires ROM license acceptance (``autorom --accept-license``)
+.. list-table::
+   :widths: 20 80
+   :header-rows: 0
+
+   * - **Paradigm**
+     - Single-agent
+   * - **Stepping**
+     - ``SINGLE_AGENT``
+   * - **Note**
+     - Requires ROM license acceptance (``autorom --accept-license``)
+
+Installation
+------------
+
+.. code-block:: bash
+
+   pip install -e ".[atari]"
 
 .. list-table::
    :header-rows: 1

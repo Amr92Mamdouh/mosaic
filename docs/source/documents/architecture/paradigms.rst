@@ -103,4 +103,4 @@ all actions together in one transition.
        actions = {agent: policy(obs) for agent, obs in observations.items()}
        observations, rewards, terminations, truncations, infos = env.step(actions)
 
-**Use cases**: MPE, cooperative control, competitive games
+**Use cases**: MPE, cooperative control, competitive games, SocialJax social dilemmas, MeltingPot

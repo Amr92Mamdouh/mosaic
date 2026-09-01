@@ -78,7 +78,7 @@ Setup
    pip install -e .
 
    # Install with optional environment families and workers
-   pip install -e ".[minigrid,mosaic_multigrid,multigrid_ini,pettingzoo,mujoco,atari,vizdoom,crafter,nethack,overcooked,rware,cleanrl,xuance,chat]"
+   pip install -e ".[minigrid,mosaic_multigrid,multigrid_ini,pettingzoo,mujoco,atari,vizdoom,crafter,nethack,overcooked,rware,socialjax,cleanrl,xuance,chat]"
 
 .. tip::
 
@@ -180,6 +180,20 @@ Some environments install from local source in ``3rd_party/`` (workers, environm
 
    # RWARE (warehouse delivery)
    pip install -e 3rd_party/environments/robotic-warehouse/
+
+   # SocialJax (pure-JAX sequential social dilemmas)
+   pip install -r requirements/socialjax.txt
+
+.. tip::
+
+   **JAX GPU memory:** When running SocialJax environments (or any JAX-based worker),
+   set ``XLA_PYTHON_CLIENT_PREALLOCATE=false`` to prevent JAX from pre-allocating
+   ~75 % of GPU VRAM at startup:
+
+   .. code-block:: bash
+
+      export XLA_PYTHON_CLIENT_PREALLOCATE=false
+      python -m gym_gui
 
 Install MOSAIC Native Workers
 ------------------------------

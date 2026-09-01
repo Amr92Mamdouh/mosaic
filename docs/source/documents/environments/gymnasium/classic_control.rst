@@ -3,10 +3,16 @@ Classic Control
 
 Continuous-state control tasks with simple physics.
 
-:Install: ``pip install -e ".[gymnasium]"``
 :Paradigm: Single-agent
 :Stepping: ``SINGLE_AGENT``
 :Docs: `gymnasium.farama.org/environments/classic_control/ <https://gymnasium.farama.org/environments/classic_control/>`_
+
+Installation
+------------
+
+.. code-block:: bash
+
+   pip install -e ".[gymnasium]"
 
 .. list-table::
    :header-rows: 1

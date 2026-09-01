@@ -23,6 +23,7 @@ Some workers are designed to facilitate training reinforcement learning algorith
            W5["Jumanji Worker<br/>JAX Combinatorial"]
            W6["BALROG Worker<br/>Single-Agent LLM"]
            W7["MOSAIC LLM Worker<br/>Multi-Agent LLM"]
+           W8["JaxMARL Worker<br/>IPPO · MAPPO · MAT (JAX)"]
        end
 
        GUI -- "gRPC" --> Daemon
@@ -33,6 +34,7 @@ Some workers are designed to facilitate training reinforcement learning algorith
        Daemon -- "spawn + JSONL" --> W5
        Daemon -- "spawn + JSONL" --> W6
        Daemon -- "spawn + JSONL" --> W7
+       Daemon -- "spawn + JSONL" --> W8
 
        style GUI fill:#4a90d9,stroke:#2e5a87,color:#fff
        style Daemon fill:#50c878,stroke:#2e8b57,color:#fff
@@ -43,6 +45,7 @@ Some workers are designed to facilitate training reinforcement learning algorith
        style W5 fill:#ff7f50,stroke:#cc5500,color:#fff
        style W6 fill:#ff7f50,stroke:#cc5500,color:#fff
        style W7 fill:#ff7f50,stroke:#cc5500,color:#fff
+       style W8 fill:#ff7f50,stroke:#cc5500,color:#fff
 
 Key Principles
 --------------
@@ -108,6 +111,10 @@ Available Workers
      - Evaluation
      - GPT-4, Claude, Llama (multi-agent)
      - Multi-agent LLM with coordination strategies and Theory of Mind
+   * - JaxMARL
+     - Multi-Agent (JAX)
+     - IPPO, MAPPO, MAT (hardware-accelerated via JAX)
+     - Sequential social dilemma training on SocialJax environments
 
 .. tip::
 

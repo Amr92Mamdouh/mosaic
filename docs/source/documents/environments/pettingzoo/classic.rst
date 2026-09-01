@@ -15,10 +15,16 @@ Turn-based board games using PettingZoo's AEC (Alternating Environment Cycle) AP
 In MOSAIC, these run with ``SEQUENTIAL`` stepping — each agent observes, decides,
 and acts before the turn passes to the next player.
 
-:Install: ``pip install -e ".[pettingzoo]"``
 :Paradigm: Multi-agent (turn-based)
 :Stepping: ``SEQUENTIAL``
 :Docs: `pettingzoo.farama.org/environments/classic/ <https://pettingzoo.farama.org/environments/classic/>`_
+
+Installation
+------------
+
+.. code-block:: bash
+
+   pip install -e ".[pettingzoo]"
 
 Chess
 -----

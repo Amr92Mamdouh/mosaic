@@ -11,9 +11,21 @@ Crafter
 
 Open-world survival benchmark testing a wide spectrum of agent capabilities.
 
-:Install: ``pip install -e ".[crafter]"``
-:Paradigm: Single-agent
-:Stepping: ``SINGLE_AGENT``
+.. list-table::
+   :widths: 20 80
+   :header-rows: 0
+
+   * - **Paradigm**
+     - Single-agent
+   * - **Stepping**
+     - ``SINGLE_AGENT``
+
+Installation
+------------
+
+.. code-block:: bash
+
+   pip install -e ".[crafter]"
 
 .. list-table::
    :header-rows: 1

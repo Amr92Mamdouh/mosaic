@@ -3,10 +3,23 @@ Procgen
 
 16 procedurally generated environments for testing generalisation.
 
-:Install: ``pip install -e ".[procgen]"``
-:Paradigm: Single-agent
-:Stepping: ``SINGLE_AGENT``
-:Note: Python 3.10 uses ``procgen``; Python 3.11+ uses ``procgen-mirror``
+.. list-table::
+   :widths: 20 80
+   :header-rows: 0
+
+   * - **Paradigm**
+     - Single-agent
+   * - **Stepping**
+     - ``SINGLE_AGENT``
+   * - **Note**
+     - Python 3.10 uses ``procgen``; Python 3.11+ uses ``procgen-mirror``
+
+Installation
+------------
+
+.. code-block:: bash
+
+   pip install -e ".[procgen]"
 
 .. list-table::
    :header-rows: 1

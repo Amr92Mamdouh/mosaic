@@ -11,9 +11,21 @@ ViZDoom
 
 Doom-based first-person visual RL environments.
 
-:Install: ``pip install -e ".[vizdoom]"``
-:Paradigm: Single-agent
-:Stepping: ``SINGLE_AGENT``
+.. list-table::
+   :widths: 20 80
+   :header-rows: 0
+
+   * - **Paradigm**
+     - Single-agent
+   * - **Stepping**
+     - ``SINGLE_AGENT``
+
+Installation
+------------
+
+.. code-block:: bash
+
+   pip install -e ".[vizdoom]"
 
 .. list-table::
    :header-rows: 1

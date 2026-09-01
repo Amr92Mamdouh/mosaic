@@ -3,10 +3,23 @@ MiniHack
 
 Sandbox RL environments built on the NetHack Learning Environment (NLE).
 
-:Install: ``pip install -e ".[nethack]"``
-:Paradigm: Single-agent
-:Stepping: ``SINGLE_AGENT``
-:System: Requires ``build-essential``, ``cmake``, ``flex``, ``bison``
+.. list-table::
+   :widths: 20 80
+   :header-rows: 0
+
+   * - **Paradigm**
+     - Single-agent
+   * - **Stepping**
+     - ``SINGLE_AGENT``
+   * - **System**
+     - Requires ``build-essential``, ``cmake``, ``flex``, ``bison``
+
+Installation
+------------
+
+.. code-block:: bash
+
+   pip install -e ".[nethack]"
 
 .. list-table::
    :header-rows: 1

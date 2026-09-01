@@ -3,10 +3,16 @@ MuJoCo
 
 Continuous-control locomotion and manipulation via MuJoCo physics.
 
-:Install: ``pip install -e ".[mujoco]"``
 :Paradigm: Single-agent
 :Stepping: ``SINGLE_AGENT``
 :Docs: `gymnasium.farama.org/environments/mujoco/ <https://gymnasium.farama.org/environments/mujoco/>`_
+
+Installation
+------------
+
+.. code-block:: bash
+
+   pip install -e ".[mujoco]"
 
 .. list-table::
    :header-rows: 1

@@ -81,7 +81,7 @@ autodoc_mock_imports = [
     "cleanrl",
     "xuance",
     "dotenv",
-    "mosaic_multigrid",
+    "multigrid_sports",
     "multigrid",
     "minigrid",
     "gym_minigrid",
