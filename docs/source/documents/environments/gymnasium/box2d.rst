@@ -11,10 +11,16 @@ Box2D
 
 2D physics environments powered by the Box2D engine.
 
-:Install: ``pip install -e ".[box2d]"``
 :Paradigm: Single-agent
 :Stepping: ``SINGLE_AGENT``
 :Docs: `gymnasium.farama.org/environments/box2d/ <https://gymnasium.farama.org/environments/box2d/>`_
+
+Installation
+------------
+
+.. code-block:: bash
+
+   pip install -e ".[box2d]"
 
 .. list-table::
    :header-rows: 1

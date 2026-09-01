@@ -3,9 +3,27 @@ BabyAI
 
 Language-grounded instruction following built on MiniGrid.
 
-:Install: ``pip install -e ".[minigrid]"`` (or ``pip install -e ".[minigrid-balrog]"`` for BALROG tasks)
-:Paradigm: Single-agent
-:Stepping: ``SINGLE_AGENT``
+.. list-table::
+   :widths: 20 80
+   :header-rows: 0
+
+   * - **Paradigm**
+     - Single-agent
+   * - **Stepping**
+     - ``SINGLE_AGENT``
+
+Installation
+------------
+
+.. code-block:: bash
+
+   pip install -e ".[minigrid]"
+
+Alternative for BALROG tasks:
+
+.. code-block:: bash
+
+   pip install -e ".[minigrid-balrog]"
 
 .. list-table::
    :header-rows: 1

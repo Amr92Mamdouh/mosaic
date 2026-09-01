@@ -215,24 +215,6 @@ renderers.
 game-specific signals that are forwarded through :doc:`render_tabs` so
 controllers can react to player moves without knowing which strategy is active.
 
-Directory Layout
-----------------
-
-.. code-block:: text
-
-   gym_gui/
-     rendering/
-       __init__.py
-       interfaces.py       # RendererContext, RendererStrategy protocol
-       registry.py          # RendererRegistry factory
-       assets.py            # AssetManager singleton (QPixmap cache)
-       strategies/
-         rgb.py             # RgbRendererStrategy + _RgbView widget
-         grid.py            # GridRendererStrategy + _GridRenderer
-         board_game.py      # BoardGameRendererStrategy (6 games)
-     assets/
-       toy_text_images/     # Sprite sheets for grid environments
-
 See Also
 --------
 

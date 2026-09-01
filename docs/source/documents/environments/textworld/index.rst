@@ -3,10 +3,23 @@ TextWorld
 
 Text-based interactive fiction environments from Microsoft Research.
 
-:Install: ``pip install -e ".[textworld]"``
-:Paradigm: Single-agent
-:Stepping: ``SINGLE_AGENT``
-:Note: Linux/macOS only
+.. list-table::
+   :widths: 20 80
+   :header-rows: 0
+
+   * - **Paradigm**
+     - Single-agent
+   * - **Stepping**
+     - ``SINGLE_AGENT``
+   * - **Note**
+     - Linux/macOS only
+
+Installation
+------------
+
+.. code-block:: bash
+
+   pip install -e ".[textworld]"
 
 .. list-table::
    :header-rows: 1

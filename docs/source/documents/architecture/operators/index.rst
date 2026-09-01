@@ -45,6 +45,7 @@ should I take?"*
            RW1["cleanrl_worker<br/>PPO / DQN"]
            RW2["xuance_worker<br/>MAPPO / QMIX"]
            RW3["ray_worker<br/>PPO / IMPALA"]
+           RW4["jaxmarl_worker<br/>IPPO / MAPPO / MAT"]
        end
 
        subgraph RND_OP["Random Operator"]
@@ -71,6 +72,7 @@ should I take?"*
        style RW1 fill:#ff7f50,stroke:#cc5500,color:#fff
        style RW2 fill:#ff7f50,stroke:#cc5500,color:#fff
        style RW3 fill:#ff7f50,stroke:#cc5500,color:#fff
+       style RW4 fill:#ff7f50,stroke:#cc5500,color:#fff
        style RNDW fill:#ff7f50,stroke:#cc5500,color:#fff
        style PW fill:#ff7f50,stroke:#cc5500,color:#fff
 
@@ -140,6 +142,10 @@ Available Operators
      - rl
      - ray_worker (PPO, IMPALA)
      - Distributed RL policy evaluation
+   * - **JaxMARL**
+     - rl
+     - jaxmarl_worker (IPPO, MAPPO, MAT)
+     - JAX-accelerated multi-agent RL on social dilemma environments
    * - **MOSAIC Random Worker**
      - random
      - random_worker (random action)

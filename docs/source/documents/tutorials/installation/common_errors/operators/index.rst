@@ -149,7 +149,7 @@ environment.
    cd /path/to/mosaic
    pip install ".[mosaic_multigrid]"
 
-This installs ``mosaic-multigrid==4.4.0`` plus all base dependencies
+This installs ``mosaic-multigrid==6.4.0`` plus all base dependencies
 defined in ``pyproject.toml``.
 
 **Fix -- Option B: Install via requirements file:**
@@ -164,7 +164,7 @@ defined in ``pyproject.toml``.
 .. code-block:: bash
 
    source .venv/bin/activate
-   pip install mosaic-multigrid==4.4.0
+   pip install mosaic-multigrid==6.4.0
 
 **Verify the installation:**
 

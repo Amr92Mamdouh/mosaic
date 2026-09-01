@@ -57,49 +57,69 @@ together to form a complete picture of agent performance.
 
    <br>
 
+.. list-table::
+   :widths: 50 50
+   :class: video-showcase
 
-MOSAIC provides two evaluation modes designed for reproducibility:
+   * - .. raw:: html
+
+          <video style="width:100%; max-width:100%; height:auto; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.15);" controls autoplay muted loop playsinline>
+            <source src="https://github.com/user-attachments/assets/df505885-525f-4f21-bacc-96f5464cf845?raw=true" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <p style="text-align:center; font-size:0.95em; color:#555; margin-top:6px;">
+            <strong>Google Research Football running inside MOSAIC</strong>: human-controlled player, 10 Hz real-time stepping, RGB render view.
+          </p>
+     - .. raw:: html
+
+          <video style="width:100%; max-width:100%; height:auto; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.15);" controls autoplay muted loop playsinline>
+            <source src="https://github.com/user-attachments/assets/118bbc56-2ca0-4c7b-8c0c-c24464dbad43?raw=true" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <p style="text-align:center; font-size:0.95em; color:#555; margin-top:6px;">
+            <strong>MAPPO training on GRF</strong> (scenario <code>academy_3_vs_1_with_keeper</code>) via <code>xuance_worker</code> inside MOSAIC.
+          </p>
+   * - .. raw:: html
+
+          <video style="width:100%; max-width:100%; height:auto; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.15);" controls autoplay muted loop playsinline>
+            <source src="https://github.com/user-attachments/assets/6c1bde96-c0ab-401c-ba80-56cdf3ab6807?raw=true" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <p style="text-align:center; font-size:0.95em; color:#555; margin-top:6px;">
+            <strong>StarCraft Multi-Agent Challenge (SMAC) inside MOSAIC</strong>: cooperative micromanagement scenarios via <code>xuance_worker</code>.
+          </p>
+     - .. raw:: html
+
+          <video style="width:100%; max-width:100%; height:auto; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.15);" controls autoplay muted loop playsinline>
+            <source src="https://github.com/user-attachments/assets/1f1b362d-0046-4393-ba23-675269239b3d?raw=true" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <p style="text-align:center; font-size:0.95em; color:#555; margin-top:6px;">
+            <strong>MAPPO training on SMAC</strong> via <code>xuance_worker</code> inside MOSAIC.
+          </p>
+   * - .. raw:: html
+
+          <video style="width:100%; max-width:100%; height:auto; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.15);" controls autoplay muted loop playsinline>
+            <source src="https://github.com/user-attachments/assets/dc83a7d3-8088-49f5-a1ad-05acece24b50?raw=true" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <p style="text-align:center; font-size:0.95em; color:#555; margin-top:6px;">
+            <strong>SMACv2 inside MOSAIC</strong>: procedural unit spawns and randomised team compositions via <code>xuance_worker</code>.
+          </p>
+     - .. raw:: html
+
+          <video style="width:100%; max-width:100%; height:auto; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.15);" controls autoplay muted loop playsinline>
+            <source src="https://github.com/user-attachments/assets/a752f29d-6b40-4a36-adea-21f3bc09069c?raw=true" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <p style="text-align:center; font-size:0.95em; color:#555; margin-top:6px;">
+            <strong>MAPPO training on SMACv2</strong> via <code>xuance_worker</code> inside MOSAIC.
+          </p>
 
 .. raw:: html
 
-   <video style="width:100%; max-width:100%; height:auto; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.15);" controls autoplay muted loop playsinline>
-     <source src="https://github.com/user-attachments/assets/ea9ebc18-2216-4fb2-913c-5d354ebea56e?raw=true" type="video/mp4">
-     Your browser does not support the video tag.
-   </video>
-   <p style="text-align:center; font-size:0.95em; color:#555; margin-top:6px;">
-     <strong>Manual Mode</strong> Side-by-side lock-step evaluation with shared seeds.
-     See <a href="documents/architecture/operators/index.html">Operators &amp; Evaluation Modes</a>
-     and <a href="documents/rendering_tabs/slow_lane.html">Slow Lane (Render View)</a>.
-   </p>
+   <br>
 
-- **Manual Mode:** side-by-side comparison where multiple operators step through
-  the same environment with shared seeds, letting researchers visually inspect
-  decision-making differences between paradigms in real time.
-
-.. raw:: html
-
-   <video style="width:100%; max-width:100%; height:auto; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.15);" controls autoplay muted loop playsinline>
-     <source src="https://github.com/user-attachments/assets/a9b3f6f4-661c-492f-b43f-34d7125a6d2e?raw=true" type="video/mp4">
-     Your browser does not support the video tag.
-   </video>
-   <p style="text-align:center; font-size:0.95em; color:#555; margin-top:6px;">
-     <strong>Script Mode:</strong> Automated batch evaluation with deterministic seed sequences.
-     See <a href="documents/architecture/operators/architecture.html">IPC Architecture</a>
-     and <a href="documents/runtime_logging/index.html">Runtime Logging</a>.
-   </p>
-
-- **Script Mode:** automated, long-running evaluation driven by Python scripts
-  that define operator configurations, worker assignments, seed sequences, and
-  episode counts.  Scripts execute deterministically with no manual intervention,
-  producing reproducible telemetry logs (JSONL) for every step and episode.
-
-All evaluation runs share **identical conditions**: same environment seeds, same
-observations, and unified telemetry.  Script Mode additionally supports
-**procedural seeds** (different seed per episode to test generalization) and
-**fixed seeds** (same seed every episode to isolate agent behaviour), with
-configurable step pacing for visual inspection or headless batch execution.
-
-| **GitHub**: `https://github.com/Abdulhamid97Mousa/MOSAIC <https://github.com/Abdulhamid97Mousa/MOSAIC>`_
 
 Why MOSAIC?
 -----------
@@ -115,7 +135,7 @@ under a unified, visual-first interface.
 **MOSAIC provides:**
 
 - **Visual-First Design**: Configure experiments through an intuitive PyQt6 interface, **Almost no code required**.
-- **Heterogeneous Agent Mixing**: Deploy Human(Agent),  RL, and LLM agents in the same environment
+- **Heterogeneous Agents Cooperation**: Deploy Human(Agent),  RL, and LLM agents in the same environment
 - **Resource Management & Quotas**: GPU allocation, queue limits, credit-based backpressure, health monitoring.
 - **Per-Agent Policy Binding**: Route each agent to different workers via ``PolicyMappingService``.
 - **Worker Lifecycle Orchestration**: Subprocess management with heartbeat monitoring and graceful termination.
@@ -139,7 +159,7 @@ under a unified, visual-first interface.
      Your browser does not support the video tag.
    </video>
    <p style="text-align:center; font-size:0.95em; color:#555; margin-top:6px;">
-     <strong>Random Agents:</strong> Baseline agents across 28 environment families.
+     <strong>Random Agents:</strong> Baseline agents across 33 environment families.
      See <a href="documents/architecture/workers/integrated_workers/MOSAIC_Random_Worker/index.html">MOSAIC Random Worker</a>
      and <a href="documents/environments/index.html">Supported Environments</a>.
    </p>
@@ -331,8 +351,6 @@ Existing frameworks are paradigm-siloed. No prior framework allowed fair,
 reproducible, head-to-head comparison between RL agents and LLM agents in the
 same multi-agent environment.
 
-**Agent-mixing**: infrastructure for deploying heterogeneous agents from different paradigms in the same environment.
-
 **Platform GUI**: real-time visualization during execution.
 
 **Cross-Paradigm**: infrastructure for comparing different agent types (e.g., RL
@@ -364,182 +382,175 @@ reproducible head-to-head evaluation.
          <th colspan="4" style="border-bottom:1px solid #aaa;">Agent Paradigms</th>
          <th colspan="2" style="border-bottom:1px solid #aaa;">Infrastructure</th>
          <th style="border-bottom:1px solid #aaa;">Evaluation</th>
-         <th style="border-bottom:1px solid #aaa;">Agent-mixing</th>
        </tr>
        <tr style="border-bottom:2px solid #333;">
          <th>RL</th><th>LLM</th><th>VLM</th><th>Human</th>
          <th>Framework</th><th>Platform GUI</th><th>Cross-Paradigm</th>
-         <th></th>
        </tr>
      </thead>
      <tbody>
-       <tr class="section-row"><td colspan="9"><strong>RL Frameworks</strong></td></tr>
+       <tr class="section-row"><td colspan="8"><strong>RL Frameworks</strong></td></tr>
        <tr>
          <td>RLlib <a href="#ref1">[1]</a></td>
          <td><span class="cmp-yes">&#10003;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
          <td><span class="cmp-yes">&#10003;</span></td>
-         <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
+         <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
        </tr>
        <tr>
          <td>CleanRL <a href="#ref2">[2]</a></td>
          <td><span class="cmp-yes">&#10003;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
          <td><span class="cmp-yes">&#10003;</span></td>
-         <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
+         <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
        </tr>
        <tr>
          <td>Tianshou <a href="#ref3">[3]</a></td>
          <td><span class="cmp-yes">&#10003;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
          <td><span class="cmp-yes">&#10003;</span></td>
-         <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
+         <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
        </tr>
        <tr>
          <td>Acme <a href="#ref4">[4]</a></td>
          <td><span class="cmp-yes">&#10003;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
          <td><span class="cmp-yes">&#10003;</span></td>
-         <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
+         <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
        </tr>
        <tr>
          <td>XuanCe <a href="#ref5">[5]</a></td>
          <td><span class="cmp-yes">&#10003;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
          <td><span class="cmp-yes">&#10003;</span></td>
-         <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
+         <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
        </tr>
        <tr>
          <td>OpenRL <a href="#ref6">[6]</a></td>
          <td><span class="cmp-yes">&#10003;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
          <td><span class="cmp-yes">&#10003;</span></td>
-         <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
+         <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
        </tr>
        <tr>
          <td>Stable-Baselines3 <a href="#ref7">[7]</a></td>
          <td><span class="cmp-yes">&#10003;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
          <td><span class="cmp-yes">&#10003;</span></td>
-         <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
+         <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
        </tr>
        <tr>
          <td>Coach <a href="#ref8">[8]</a></td>
          <td><span class="cmp-yes">&#10003;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
          <td><span class="cmp-yes">&#10003;</span></td>
-         <td><span class="cmp-yes">&#10003;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
+         <td><span class="cmp-yes">&#10003;</span></td><td><span class="cmp-no">&#10007;</span></td>
        </tr>
        <tr>
          <td>BenchMARL <a href="#ref15">[15]</a></td>
          <td><span class="cmp-yes">&#10003;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
          <td><span class="cmp-yes">&#10003;</span></td>
-         <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
-       </tr>
-       <tr>
-         <td>HeMAC <a href="#ref25">[25]</a></td>
-         <td><span class="cmp-yes">&#10003;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
-         <td><span class="cmp-yes">&#10003;</span></td>
-         <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
+         <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
        </tr>
        <tr>
          <td>Overcooked-AI <a href="#ref26">[26]</a></td>
          <td><span class="cmp-yes">&#10003;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-yes">&#10003;</span></td>
          <td><span class="cmp-yes">&#10003;</span></td>
-         <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
+         <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
        </tr>
 
-       <tr class="section-row"><td colspan="9"><strong>LLM/VLM Benchmarks</strong></td></tr>
+       <tr class="section-row"><td colspan="8"><strong>LLM/VLM Benchmarks</strong></td></tr>
        <tr>
          <td>BALROG <a href="#ref9">[9]</a></td>
          <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-yes">&#10003;</span></td><td><span class="cmp-yes">&#10003;</span></td><td><span class="cmp-no">&#10007;</span></td>
          <td><span class="cmp-yes">&#10003;</span></td>
-         <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
+         <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
        </tr>
        <tr>
          <td>TextArena <a href="#ref10">[10]</a></td>
          <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-yes">&#10003;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-yes">&#10003;</span></td>
          <td><span class="cmp-yes">&#10003;</span></td>
-         <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
+         <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
        </tr>
        <tr>
          <td>GameBench <a href="#ref11">[11]</a></td>
          <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-yes">&#10003;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
          <td><span class="cmp-yes">&#10003;</span></td>
-         <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
+         <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
        </tr>
        <tr>
          <td>lmgame-Bench <a href="#ref12">[12]</a></td>
          <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-yes">&#10003;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
          <td><span class="cmp-yes">&#10003;</span></td>
-         <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
+         <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
        </tr>
        <tr>
          <td>LLM Chess <a href="#ref13">[13]</a></td>
          <td><span class="cmp-yes">&#10003;</span></td><td><span class="cmp-yes">&#10003;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
          <td><span class="cmp-yes">&#10003;</span></td>
-         <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
+         <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
        </tr>
        <tr>
          <td>LLM-Game-Bench <a href="#ref14">[14]</a></td>
          <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-yes">&#10003;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
          <td><span class="cmp-yes">&#10003;</span></td>
-         <td><span class="cmp-part">&#9673;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
+         <td><span class="cmp-part">&#9673;</span></td><td><span class="cmp-no">&#10007;</span></td>
        </tr>
        <tr>
          <td>AgentBench <a href="#ref16">[16]</a></td>
          <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-yes">&#10003;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
          <td><span class="cmp-yes">&#10003;</span></td>
-         <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
+         <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
        </tr>
        <tr>
          <td>MultiAgentBench <a href="#ref17">[17]</a></td>
          <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-yes">&#10003;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
          <td><span class="cmp-yes">&#10003;</span></td>
-         <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
+         <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
        </tr>
        <tr>
          <td>GAMEBoT <a href="#ref18">[18]</a></td>
          <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-yes">&#10003;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
          <td><span class="cmp-yes">&#10003;</span></td>
-         <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
+         <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
        </tr>
        <tr>
          <td>Collab-Overcooked <a href="#ref19">[19]</a></td>
          <td><span class="cmp-part">&#9673;</span></td><td><span class="cmp-yes">&#10003;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
          <td><span class="cmp-yes">&#10003;</span></td>
-         <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
+         <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
        </tr>
        <tr>
          <td>BotzoneBench <a href="#ref20">[20]</a></td>
          <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-yes">&#10003;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
          <td><span class="cmp-yes">&#10003;</span></td>
-         <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
+         <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
        </tr>
        <tr>
          <td>AgentGym <a href="#ref21">[21]</a></td>
          <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-yes">&#10003;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
          <td><span class="cmp-yes">&#10003;</span></td>
-         <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
+         <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
        </tr>
 
-       <tr class="section-row"><td colspan="9"><strong>Cross-Paradigm Frameworks</strong></td></tr>
+       <tr class="section-row"><td colspan="8"><strong>Cross-Paradigm Frameworks</strong></td></tr>
        <tr>
          <td>Game Reasoning Arena <a href="#ref22">[22]</a></td>
          <td><span class="cmp-yes">&#10003;</span></td><td><span class="cmp-yes">&#10003;</span></td><td><span class="cmp-part">&#9673;</span></td><td><span class="cmp-part">&#9673;</span></td>
          <td><span class="cmp-yes">&#10003;</span></td>
-         <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
+         <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
        </tr>
        <tr>
          <td>CREW <a href="#ref23">[23]</a></td>
          <td><span class="cmp-yes">&#10003;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-yes">&#10003;</span></td>
          <td><span class="cmp-yes">&#10003;</span></td>
-         <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
+         <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
        </tr>
        <tr>
          <td>LLM-PySC2 <a href="#ref24">[24]</a></td>
          <td><span class="cmp-yes">&#10003;</span></td><td><span class="cmp-yes">&#10003;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
          <td><span class="cmp-yes">&#10003;</span></td>
-         <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
+         <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-no">&#10007;</span></td>
        </tr>
 
        <tr class="mosaic-row">
          <td>MOSAIC (Ours)</td>
-         <td><span class="cmp-yes">&#10003;</span></td><td><span class="cmp-yes">&#10003;</span></td><td><span class="cmp-yes">&#10003;</span></td>
          <td><span class="cmp-yes">&#10003;</span></td><td><span class="cmp-yes">&#10003;</span></td>
-         <td><span class="cmp-yes">&#10003;</span></td><td><span class="cmp-yes">&#10003;</span></td><td><span class="cmp-yes">&#10003;</span></td>
+         <td><span class="cmp-yes">&#10003;</span></td><td><span class="cmp-yes">&#10003;</span></td>
+         <td><span class="cmp-no">&#10007;</span></td><td><span class="cmp-yes">&#10003;</span></td>
+         <td><span class="cmp-yes">&#10003;</span></td>
        </tr>
      </tbody>
    </table>
@@ -596,10 +607,14 @@ Formal Notation
      - Total number of agents in the system
    * - **Team Partitions**
      -
-   * - :math:`\mathcal{T}_A, \mathcal{T}_B`
-     - Disjoint team partitions: :math:`\mathcal{T}_A \cap \mathcal{T}_B = \emptyset`, :math:`\mathcal{T}_A \cup \mathcal{T}_B = \{1,\ldots,N\}`
-   * - :math:`n_A, n_B`
-     - Team sizes: :math:`n_A = |\mathcal{T}_A|`, :math:`n_B = |\mathcal{T}_B|`, :math:`n_A + n_B = N`
+   * - :math:`K`
+     - Number of teams (:math:`K \geq 1`)
+   * - :math:`\mathcal{T}_1, \mathcal{T}_2, \ldots, \mathcal{T}_K`
+     - Disjoint team partitions covering all agents: :math:`\mathcal{T}_i \cap \mathcal{T}_j = \emptyset` for :math:`i \neq j`, :math:`\bigcup_{k=1}^{K} \mathcal{T}_k = \{1,\ldots,N\}`
+   * - :math:`n_k = |\mathcal{T}_k|`
+     - Size of team :math:`k`; :math:`\sum_{k=1}^{K} n_k = N`
+   * - :math:`\mathcal{T}_A \equiv \mathcal{T}_1,\ \mathcal{T}_B \equiv \mathcal{T}_2`; :math:`n_A \equiv n_1,\ n_B \equiv n_2`
+     - Two-team convention used in the experimental configurations below (:math:`K=2` case)
    * - **Observation and Action Spaces**
      -
    * - :math:`\mathcal{O}^{\text{RL}} = \mathbb{R}^d`
@@ -614,54 +629,63 @@ Formal Notation
      - Discrete action space (shared after paradigm-specific parsing)
    * - :math:`\phi: \Sigma^{*} \to \mathcal{A}`
      - Deterministic parsing function mapping LLM/VLM text to actions
+   * - **Policy Inputs and Action Composition**
+     -
+   * - :math:`\pi_\theta`
+     - MARL policy parameterized by :math:`\theta` (shared across agents or per-agent, depending on algorithm)
+   * - :math:`\tau_i^t`
+     - Trajectory (observation-action history) of agent :math:`i` up to time :math:`t`
+   * - :math:`e_i`
+     - Agent identity/embedding for agent :math:`i`
+   * - :math:`a_i^t \sim \pi_\theta(\cdot \mid \tau_i^t, e_i)`
+     - Action of agent :math:`i` at time :math:`t`, sampled from the MARL policy
+   * - :math:`a^{\text{sub},t} = (a_1^{\text{sub},t}, \ldots, a_n^{\text{sub},t})`
+     - Submitted joint action at time :math:`t` (input to the environment step)
+   * - :math:`a_i^{\text{ext},t}`
+     - External action injected by an operator at slot :math:`i` during deployment
+   * - :math:`\text{Merge}(a^{\text{MARL}}, a^{\text{ext}}) \to a^{\text{sub},t}`
+     - Action Merger composing MARL outputs with external actions before submission
+   * - :math:`(s^{t+1}, r^t, \text{Done})`
+     - Environment transition after applying :math:`a^{\text{sub},t}`
 
-Standard Self-Play vs Cross-Paradigm Transfer
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Training and Deployment Phases
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. figure:: images/architecture/zsc_vs_transfer.png
-   :alt: Standard Self-Play vs Cross-Paradigm Transfer
+.. figure:: images/architecture/training_deployment_phases.png
+   :alt: Training and Deployment Phases
    :align: center
    :width: 90%
 
-   **Standard Self-Play and Cross-Paradigm Transfer.**
+   **Training and Deployment Phases.**
 
-**(a) Standard Self-Play (Baseline):** Agents :math:`\pi^{RL}_1` and :math:`\pi^{RL}_2` are
-   co-trained, learning implicit partner models that overfit to the specific environment.
-   This approach fails the Zero-Shot Coordination (ZSC) challenge because it struggles to
-   coordinate with unseen RL partners (who may have learned different features). It
-   collapses when a partner is swapped across paradigms (e.g., :math:`\pi^{RL}` paired with
-   :math:`\lambda^{LLM}`) due to observation space mismatches
-   (:math:`\mathcal{O}^{\text{RL}} \neq \mathcal{O}^{\text{LLM}}`) and violated behavioral
-   expectations.
+**(A) Cooperative training-phase (Cooperative Self-Play):** All :math:`n` agents
+submit observations :math:`O_i^t, e_i` to a shared MARL policy :math:`\pi_\theta`
+each timestep. The policy outputs an action
+:math:`a_i^t \sim \pi_\theta(\cdot \mid \tau_i^t, e_i)` per agent; these are
+assembled into the joint action :math:`a^{\text{sub},t}` submitted to the
+environment. This is standard cooperative multi-agent training (e.g., MAPPO,
+QMIX) on tasks like Basketball, where all agents share a common objective.
 
-**(b) Cross-Paradigm Transfer (MOSAIC):** Agent :math:`\pi^{RL}` is trained solo
-(:math:`N=1`, zero partner expectations), then deployed in multi-agent teams alongside
-   heterogeneous partners such as LLM agents :math:`\lambda^{LLM}`, human players :math:`h`,
-   or random baselines. By eliminating co-training dependencies, agents can cooperate
-   across paradigm boundaries using a unified action interface.
+**(B) Adversarial training-phase (Competitive Self-Play):** The same structure
+applies to competitive settings such as Soccer, where opposing teams (green vs.
+blue) are trained via self-play against each other under the same policy
+:math:`\pi_\theta`.
 
-.. list-table:: Comparison: Standard Self-Play vs Cross-Paradigm Transfer
-   :header-rows: 1
-   :widths: 20 40 40
+**(C) Cooperative deployment-phase (Cross-Paradigm External Agent):** At
+deployment, one or more external operators join the team alongside the MARL
+policy's agents. The MARL policy still produces actions for all :math:`n` of
+its trained agents, and each external operator contributes one additional
+action per timestep. An operator may be an LLM, or an RL policy trained under
+a different algorithm (MAPPO, IPPO, VDPPO, QMIX, CommNet, IC3NET, MAT). The
+**Action Merger** combines the MARL policy outputs with the external actions
+(:math:`\text{Merge}(a^{\text{MARL}}, a^{\text{ext}}) \to a^{\text{sub},t}`)
+to form the joint action submitted to the environment. This lets researchers
+train a team of :math:`n` agents and deploy with :math:`n + k` agents by
+adding :math:`k` external decision-makers at evaluation time, without
+retraining the original team.
 
-   * - Aspect
-     - Standard Self-Play (Baseline)
-     - Cross-Paradigm Transfer (MOSAIC)
-   * - Training
-     - Co-training via self-play (:math:`N \geq 2`)
-     - Solo training (:math:`N=1`)
-   * - Partner Model
-     - Implicit partner model (overfitted to training partner)
-     - Zero partner expectations
-   * - Generalization (RL)
-     - Fails with unseen RL partners (ZSC failure)
-     - Generalizes to unseen solo-trained RL partners
-   * - Generalization (Cross-Paradigm)
-     - Fails when swapping RL ↔ LLM (Interface mismatch)
-     - Succeeds across paradigm boundaries
-   * - Deployment
-     - Requires same-paradigm, familiar partners
-     - Supports RL, LLM, human, scripted agents
+See :doc:`Policy Mappings for Heterogeneous Multi-Agent Systems <documents/architecture/operators/policy_mappings>`
+for the full mechanism and configuration reference.
 
 Adversarial Cross‑Paradigm Matchups
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -777,35 +801,58 @@ cross-paradigm teaming against co-trained RL teams. C8 directly compares LLM and
 as teammates within heterogeneous teams.
 
 
-.. admonition:: Solo‑to‑Team Transfer Design – Why Solo Training?
-   :class: important
 
-   RL agents are trained as **solo experts** in single-agent environments
-   (:math:`N=1`), then deployed as teammates in multi-agent settings
-   **without any fine‑tuning**. This design eliminates the *co-training
-   confound* and avoids the failure modes of standard self-play.
 
-   In standard self-play, agents develop implicit partner models calibrated
-   against other RL agents sharing the same observation space
-   (:math:`\mathcal{O} = \mathbb{R}^d`). This creates two failure modes:
-   (1) **ZSC Failure**: The agent overfits to its training partner's conventions,
-   failing to coordinate with *unseen* RL agents.
-   (2) **Cross-Paradigm Failure**: As shown in the figure's "Swap Attempt"
-   panel, replacing an RL partner with an LLM agent causes a breakdown due to
-   observation space mismatches (:math:`\mathcal{O}^{\text{RL}} \neq \mathcal{O}^{\text{LLM}}`).
 
-   By training agents in isolation (:math:`N=1`), the RL policy carries **zero
-   partner expectations**. This cleanly isolates the paradigm variable as the sole
-   experimental factor, allowing true cross-paradigm coordination where the
-   challenge is not just an unknown policy, but a fundamentally different way of
-   perceiving and acting in the world.
 
-   For full mathematical details and further configurations, see the companion paper.
+MOSAIC provides two evaluation modes designed for reproducibility:
+
+.. raw:: html
+
+   <video style="width:100%; max-width:100%; height:auto; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.15);" controls autoplay muted loop playsinline>
+     <source src="https://github.com/user-attachments/assets/ea9ebc18-2216-4fb2-913c-5d354ebea56e?raw=true" type="video/mp4">
+     Your browser does not support the video tag.
+   </video>
+   <p style="text-align:center; font-size:0.95em; color:#555; margin-top:6px;">
+     <strong>Manual Mode</strong> Side-by-side lock-step evaluation with shared seeds.
+     See <a href="documents/architecture/operators/index.html">Operators &amp; Evaluation Modes</a>
+     and <a href="documents/rendering_tabs/slow_lane.html">Slow Lane (Render View)</a>.
+   </p>
+
+- **Manual Mode:** side-by-side comparison where multiple operators step through
+  the same environment with shared seeds, letting researchers visually inspect
+  decision-making differences between paradigms in real time.
+
+.. raw:: html
+
+   <video style="width:100%; max-width:100%; height:auto; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.15);" controls autoplay muted loop playsinline>
+     <source src="https://github.com/user-attachments/assets/a9b3f6f4-661c-492f-b43f-34d7125a6d2e?raw=true" type="video/mp4">
+     Your browser does not support the video tag.
+   </video>
+   <p style="text-align:center; font-size:0.95em; color:#555; margin-top:6px;">
+     <strong>Script Mode:</strong> Automated batch evaluation with deterministic seed sequences.
+     See <a href="documents/architecture/operators/architecture.html">IPC Architecture</a>
+     and <a href="documents/runtime_logging/index.html">Runtime Logging</a>.
+   </p>
+
+- **Script Mode:** automated, long-running evaluation driven by Python scripts
+  that define operator configurations, worker assignments, seed sequences, and
+  episode counts.  Scripts execute deterministically with no manual intervention,
+  producing reproducible telemetry logs (JSONL) for every step and episode.
+
+All evaluation runs share **identical conditions**: same environment seeds, same
+observations, and unified telemetry.  Script Mode additionally supports
+**procedural seeds** (different seed per episode to test generalization) and
+**fixed seeds** (same seed every episode to isolate agent behaviour), with
+configurable step pacing for visual inspection or headless batch execution.
+
+| **GitHub**: `https://github.com/Abdulhamid97Mousa/MOSAIC <https://github.com/Abdulhamid97Mousa/MOSAIC>`
+
 
 Supported Environment Families
 ------------------------------
 
-MOSAIC supports **31 environment families** spanning single-agent, multi-agent,
+MOSAIC supports **33 environment families** spanning single-agent, multi-agent,
 and cooperative/competitive paradigms.  See the full
 :doc:`Environment Families <documents/environments/index>` reference for
 installation instructions, environment lists, and academic citations.
@@ -945,6 +992,13 @@ installation instructions, environment lists, and academic citations.
      - | Human-Control: ✅
        | Single-Agent: ❌
        | Multi-Agent: ✅
+   * - :doc:`SocialJax <documents/environments/socialjax/index>`
+     - JAX-accelerated sequential social dilemmas (9 envs)
+     - .. image:: images/envs/socialjax/socialjax_common.gif
+          :width: 200px
+     - | Human-Control: ❌
+       | Single-Agent: ❌
+       | Multi-Agent: ✅
    * - :doc:`Melting Pot <documents/environments/melting_pot/index>`
      - Social multi-agent scenarios (up to 16 agents)
      - .. image:: images/envs/meltingpot/meltingpot.gif
@@ -963,15 +1017,15 @@ installation instructions, environment lists, and academic citations.
      - StarCraft Multi-Agent Challenge (hand-designed maps)
      - .. image:: images/envs/smac/smac.gif
           :width: 200px
-     - | Human-Control: ❌
-       | Single-Agent: ❌
+     - | Human-Control: ✅
+       | Single-Agent: ✅
        | Multi-Agent: ✅
    * - :doc:`SMACv2 <documents/environments/smacv2/index>`
      - StarCraft Multi-Agent Challenge v2 (procedural units)
      - .. image:: images/envs/smacv2/smacv2.png
           :width: 200px
-     - | Human-Control: ❌
-       | Single-Agent: ❌
+     - | Human-Control: ✅
+       | Single-Agent: ✅
        | Multi-Agent: ✅
    * - :doc:`RWARE <documents/environments/rware/index>`
      - Cooperative warehouse delivery
@@ -980,12 +1034,6 @@ installation instructions, environment lists, and academic citations.
      - | Human-Control: ✅
        | Single-Agent: ❌
        | Multi-Agent: ✅
-   * - :doc:`HeMAC <documents/environments/hemac/index>`
-     - Heterogeneous multi-agent challenge (Quadcopters, Observers, Provisioners)
-     -
-     - | Human-Control: 📋
-       | Single-Agent: 📋
-       | Multi-Agent: ✅
    * - **MuJoCo**
      - Continuous-control robotics tasks
      - .. image:: images/envs/mujoco/ant.gif
@@ -993,13 +1041,13 @@ installation instructions, environment lists, and academic citations.
      - | Human-Control: ✅
        | Single-Agent: ✅
        | Multi-Agent: 📋
-   * - **Google Research Football** *(experimental)*
+   * - :doc:`Google Research Football <documents/environments/gfootball/index>`
      - 11-vs-11 football/soccer simulation (Google Research)
      - .. image:: https://1.bp.blogspot.com/-HkcNiCL13cc/XPqSVOgTwMI/AAAAAAAAEM4/OoK_qoM14QA6VNQ79sWeS97TKBhCD7CzQCLcBGAs/s640/image3.gif
           :width: 200px
-     - | Human-Control: 🚧
-       | Single-Agent: 🚧
-       | Multi-Agent: 🚧
+     - | Human-Control: ✅
+       | Single-Agent: ✅
+       | Multi-Agent: ✅
    * - :doc:`MarLo <documents/environments/marlo/index>` *(experimental)*
      - Multi-Agent RL in Minecraft (2018 MarLo Challenge)
      - .. image:: https://media.giphy.com/media/u45fNQxG59wfnRpzwJ/giphy.gif
@@ -1015,8 +1063,9 @@ installation instructions, environment lists, and academic citations.
        | Single-Agent: 🚧
        | Multi-Agent: 🚧
 
-Supported Workers (8)
----------------------
+
+Supported Workers (12)
+----------------------
 
 * :doc:`CleanRL <documents/architecture/workers/integrated_workers/CleanRL_Worker/index>`: Single-file RL implementations (PPO, DQN, SAC, TD3, DDPG, C51)
 * :doc:`XuanCe <documents/architecture/workers/integrated_workers/XuanCe_Worker/index>`: Modular RL framework with flexible algorithm composition and custom environments.
@@ -1026,7 +1075,7 @@ Supported Workers (8)
 * :doc:`MOSAIC LLM <documents/architecture/workers/integrated_workers/MOSAIC_LLM_Worker/index>`: Multi-agent LLM with coordination strategies and Theory of Mind (MultiGrid, BabyAI, MeltingPot, PettingZoo)
 * :doc:`Chess LLM <documents/architecture/workers/integrated_workers/Chess_LLM_Worker/index>`: LLM chess play with multi-turn dialog (PettingZoo Chess)
 * :doc:`MOSAIC Human Worker <documents/architecture/workers/integrated_workers/MOSAIC_Human_Worker/index>`: Human-in-the-loop play via keyboard for any Gymnasium-compatible environment (MiniGrid, Crafter, Chess, NetHack)
-* :doc:`MOSAIC Random Worker <documents/architecture/workers/integrated_workers/MOSAIC_Random_Worker/index>`: Baseline agents with random, no-op, and cycling action behaviours across all 28 environment families
+* :doc:`MOSAIC Random Worker <documents/architecture/workers/integrated_workers/MOSAIC_Random_Worker/index>`: Baseline agents with random, no-op, and cycling action behaviours across all 33 environment families
 
 Roadmap
 -------
@@ -1042,9 +1091,6 @@ MOSAIC is actively expanding to support more diverse and complex environments, s
    * - Environment
      - Status
      - Description
-   * - **Google Research Football**
-     - 🚧 Experimental
-     - 11-vs-11 football/soccer simulation for multi-agent RL research
    * - **Minecraft: Malmo**
      - 🚧 Experimental
      - Microsoft Research AI platform built on Minecraft for fundamental AI research
@@ -1128,7 +1174,6 @@ References
      <span id="ref22">[22]</span> Cipolina et al., "Game Reasoning Arena: A Comprehensive Evaluation Framework for Large Language Models," <em>arXiv:2501.00363</em>, 2025.<br>
      <span id="ref23">[23]</span> Y. Wang et al., "CREW: A Benchmark for Collaborative Multi-Step Reasoning and Planning," <em>NeurIPS</em>, 2024.<br>
      <span id="ref24">[24]</span> X. Ma et al., "LLM-PySC2: A Benchmark for Large Language Models in StarCraft II," <em>arXiv:2412.19668</em>, 2024.
-     <span id="ref25">[25]</span> C. Dansereau et al., "The Heterogeneous Multi-Agent Challenge," <em>arXiv:2509.19512</em>, 2025.<br>
      <span id="ref26">[26]</span> M. Carroll et al., "On the Utility of Learning about Humans for Human-AI Coordination," <em>NeurIPS</em>, 2019.
    </p>
 
@@ -1194,5 +1239,6 @@ Contents
    :caption: Development:
 
    GitHub <https://github.com/Abdulhamid97Mousa/MOSAIC>
+   README <../../README.md>
    documents/contributing
    documents/changelog

@@ -18,9 +18,11 @@ Prior shared-memory systems in RL (OpenAI Baselines ``ShmemVecEnv``, Sample
 Factory's shared tensors, EnvPool's ``StateBufferQueue``, TorchRL's circular
 buffers) all transfer **training data** (observations, trajectories, weights)
 between workers.  Fast Lane is the first to apply shared memory to
-**visualization output** -- rendered RGB frames streamed to a desktop GUI at
-display refresh rates with zero measurable training overhead, confirmed
-empirically across 7 RL frameworks.
+**visualization output**: rendered RGB frames streamed to a desktop GUI at
+display refresh rates with a sub-5 microsecond publish path and empirically
+decoupled writer/reader throughput.  End-to-end training-loop overhead when
+FastLane is enabled is framework-dependent and reported in the main MOSAIC
+paper.
 
 .. mermaid::
 
@@ -69,9 +71,11 @@ Sequence-Number Consistency
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The writer and reader coordinate without locks using an **odd/even sequence
-number protocol** (inspired by the Linux kernel seqlock pattern, simplified for
-CPython where the GIL provides memory visibility between struct pack/unpack
-operations on shared memoryview):
+number protocol** (inspired by the Linux kernel seqlock pattern).  The reader
+detects torn reads via the ``seq1 == seq2`` check and retries the next slot,
+which is why the protocol tolerates non-atomic ``struct.pack_into`` writes:
+it needs store ordering (provided by x86 TSO) plus torn-read detection, not
+per-write atomicity:
 
 1. **Write path**: ``FastLaneWriter.publish(frame, *, metrics, metadata) → int``:
 
@@ -91,11 +95,32 @@ operations on shared memoryview):
 
 .. note::
 
-   This is simpler than a true hardware seqlock which requires explicit memory
-   fences (``atomic_thread_fence``).  In CPython, the GIL serializes struct
-   pack/unpack operations on the shared memoryview, providing the necessary
-   memory visibility.  The pattern is correct and performant for CPython but
-   would need memory barriers in a GIL-free runtime.
+   The correctness of this protocol rests on two mechanisms; neither is the
+   GIL.  The writer and reader run in **separate OS processes**, each with
+   its own CPython interpreter, so neither process's GIL provides any
+   cross-process memory visibility guarantee.  What actually makes the
+   pattern safe on the current supported target:
+
+   1. **x86 Total Store Order (TSO).**  Stores from the writer's core become
+      visible to any other core in program order.  The odd "in-progress"
+      sequence write, the payload copy, and the even "committed" sequence
+      write are therefore observed in that order by an x86 reader on a
+      different core.
+   2. **The seq1 == seq2 retry check.**  The reader's odd-parity check plus
+      the post-copy ``seq1 == seq2`` comparison detects any torn read
+      (writer advanced mid-copy); ``latest_frame`` then retries the next
+      slot.  This is why the protocol tolerates ``struct.pack_into`` not
+      being an atomic primitive: it needs store *ordering* plus torn-read
+      detection, not atomicity.
+
+   On weakly ordered architectures (ARM, POWER) the ordering guarantee no
+   longer holds without explicit memory barriers, so the current
+   ``struct.pack_into`` implementation would need to be replaced with C11
+   atomic stores.  This is why ``test_fastlane_memory_ordering.py`` pins
+   the writer and reader to separate cores to maximize cache-coherency
+   traffic on x86, and calls out ARM as the case where the same protocol
+   would surface missing fences.  See the *Limitations* section below for
+   the ``atomics``-package migration path.
 
 3. **Metrics path**: ``FastLaneReader.metrics() → FastLaneMetrics``:
    reads ``last_reward``, ``rolling_return``, ``step_rate_hz`` directly from
@@ -217,21 +242,6 @@ See :doc:`render_tabs` for how it plugs into the central tab widget.
 - ``"policy_eval"``: adds an evaluation summary overlay that reloads
   ``eval_summary.json`` every 1 s (batch count, episodes, avg/min/max return).
 
-Directory Layout
-----------------
-
-.. code-block:: text
-
-   gym_gui/
-     fastlane/
-       __init__.py           # Public API re-exports
-       buffer.py             # SPSC shared-memory ring buffer
-       tiling.py             # tile_frames() for multi-env compositing
-       worker_helpers.py     # apply_fastlane_environment()
-     ui/
-       fastlane_consumer.py  # FastLaneConsumer (QTimer → QImage)
-       widgets/
-         fastlane_tab.py     # FastLaneTab (QQuickWidget host)
 
 Prior Art and How Fast Lane Builds on It
 ----------------------------------------
@@ -267,8 +277,10 @@ None has a GUI, a live viewer, or any visualization component.
 `LMAX Disruptor <https://lmax-exchange.github.io/disruptor/disruptor.html>`_
 (Thompson et al., 2011), where *"all memory visibility and correctness
 guarantees are implemented using memory barriers and/or compare-and-swap
-operations."*  Fast Lane adapts this pattern for CPython, replacing hardware
-memory barriers with the GIL's implicit serialization of memoryview operations.
+operations."*  Fast Lane adapts this pattern for CPython on x86 by leaning
+on Total Store Order for store ordering plus a seq-mismatch retry for
+torn-read detection, instead of explicit hardware memory fences (see the
+seqlock note above).
 
 **Frame tiling for vectorized environments** follows the ``tile_images()``
 utility in the
@@ -288,20 +300,31 @@ MOSAIC's FastLane introduces three contributions to RL visualization:
    visualization from the training loop.  The publishing worker writes frames
    to the SPSC ring buffer without blocking on the consuming GUI process, and
    the GUI reads the latest available frame without stalling the worker.
-3. **Zero measurable overhead.** Confirmed empirically across seven RL
-   frameworks (CleanRL, SBX, XuanCe, SB3, Tianshou, TorchRL, RLlib) on
-   CartPole-v1 at 100,000 steps with five seeds per condition.
+3. **Microsecond-scale publish latency and measured writer/reader
+   decoupling.**  The ``publish()`` call sustains p50 ~2.9 μs and p99
+   ~4.8 μs at 84x84 RGB, and writer throughput varies by only ~2.5%
+   whether the reader runs at 0, 1, or 60 Hz. That is the mathematical
+   definition of lock-free streaming.  Measured on CartPole-v1 across seven publishing
+   frameworks (CleanRL, SBX, XuanCe, SB3, Tianshou, TorchRL, RLlib) at
+   100,000 steps with five seeds per condition.
+
+   End-to-end training-loop overhead when FastLane is enabled is a separate,
+   framework-dependent quantity (1.26x on Tianshou to 4.81x on SBX on
+   CartPole-v1, per the FastLane column of the main MOSAIC paper's
+   wrapper-overhead table).  This cost lives in the per-step frame
+   extraction path inside each framework's own actor loop, not inside the
+   ring buffer; frameworks with the fastest baseline steps (SBX's JIT'd
+   step) see the largest relative overhead precisely because their baseline
+   is so fast.  The paper's *Worker overhead* (${\leq}\,1.05\times$ on six
+   of eight frameworks) is a distinct measurement of the subprocess-wrapper
+   cost with FastLane off.
 
 No prior RL system achieves all three properties simultaneously.  NVIDIA's
 `sim-web-visualizer <https://github.com/NVlabs/sim-web-visualizer>`_ (2022)
 streams frames over ZeroMQ, incurring kernel network stack and serialization
 overhead even on localhost.  Isaac Lab's Rerun-based visualizer (2024) renders
-within the training process, consuming training-loop cycles -- a limitation
+within the training process, consuming training-loop cycles, a limitation
 acknowledged in NVIDIA's own documentation.
-
-.. important::
-
-   **Novel Contribution.** MOSAIC's FastLane is the first system to apply shared-memory IPC to rendered visualization frames in reinforcement learning. All prior shared-memory mechanisms (OpenAI Baselines, Sample Factory, EnvPool, TorchRL) transfer training data exclusively. No prior RL framework provides zero-overhead live visualization during training.
 
 Empirical Validation
 ^^^^^^^^^^^^^^^^^^^^
@@ -309,7 +332,7 @@ Empirical Validation
 The following benchmarks were run on Ubuntu 22.04 (x86-64, ERYING Polestar
 Z790, CPython 3.11).  All tests pass with zero errors.
 
-**Throughput vs. Frame Resolution** -- Fast Lane sustains 354K FPS at CartPole
+**Throughput vs. Frame Resolution**: Fast Lane sustains 354K FPS at CartPole
 resolution (84x84) and 21K FPS at HD (640x480), far exceeding the 60 FPS
 target at every resolution.  The blue line shows actual throughput; the dashed
 coral line shows what would happen with linear (serialization-based) scaling.
@@ -319,18 +342,27 @@ Sub-linear degradation proves the protocol overhead is O(1).
    :width: 100%
    :alt: FastLane throughput vs frame resolution
 
-**Writer Decoupling from Reader Speed** -- Writer throughput is 337K fps with
+**Writer Decoupling from Reader Speed**: Writer throughput is 337K fps with
 no reader, 329K fps with a 1 Hz reader, and 328K fps with a 60 Hz reader
 (2.5% variance, within OS scheduling noise).  This proves the writer never
-waits for the reader -- the mathematical definition of lock-free streaming.
+waits for the reader. That is the mathematical definition of lock-free
+streaming.
+The 337K "no reader" baseline is slightly below the 354K figure above because
+the two numbers come from different benchmark files:
+``test_fastlane_resolution.py`` runs 20,000 frames in a tight loop with no
+reader-subprocess machinery around it, while ``test_fastlane_decoupling.py``
+runs 50,000 frames under the multi-process harness with ``capacity=64`` in
+every condition (including "no reader"), which changes cache footprint and
+scheduling.  Both are correct measurements of what they claim; they are not
+two attempts at the same measurement.
 
 .. image:: /_static/figures/benchmarks/fastlane_fig_b_decoupling.png
    :width: 100%
    :alt: FastLane writer decoupling proof
 
-**Publish Latency vs. Frame Size** -- All resolutions remain far below the
+**Publish Latency vs. Frame Size**: All resolutions remain far below the
 16,667 μs budget required for 60 Hz (dashed line).  Even at 640x480 HD,
-publish latency is 46 μs -- 362x faster than needed.  The log scale reveals
+publish latency is 46 μs, which is 362x faster than needed.  The log scale reveals
 the massive headroom at every resolution.
 
 .. image:: /_static/figures/benchmarks/fastlane_fig_c_latency.png

@@ -15,10 +15,23 @@ Overview
 **Griddly** is a high-performance grid world research platform with a C++ backend
 and Vulkan GPU rendering capable of 30,000+ FPS in headless training mode.
 
-:Install: ``pip install -e ".[griddly]"``
-:Paper: `Bamford et al. (2021) <https://arxiv.org/abs/2011.06363>`_
-:Repo: https://github.com/Bam4d/Griddly
-:Docs: https://griddly.readthedocs.io
+.. list-table::
+   :widths: 20 80
+   :header-rows: 0
+
+   * - **Paper**
+     - `Bamford et al. (2021) <https://arxiv.org/abs/2011.06363>`_
+   * - **Repo**
+     - https://github.com/Bam4d/Griddly
+   * - **Docs**
+     - https://griddly.readthedocs.io
+
+Installation
+------------
+
+.. code-block:: bash
+
+   pip install -e ".[griddly]"
 
 Key Features
 ------------

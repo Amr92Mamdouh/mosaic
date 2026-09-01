@@ -1,24 +1,62 @@
 Core API
 ========
 
-Core enums and data structures used throughout MOSAIC.
+Core enums, capability descriptors, and Qt widget classes used
+throughout MOSAIC. The autoclassed entries live in
+``gym_gui.core``; the Qt widget entries at the bottom of this page are
+maintained by hand because Sphinx cannot introspect Qt classes in a
+headless build.
 
 Enums
 -----
 
+:class:`~gym_gui.core.enums.SteppingParadigm` names the three stepping
+models MOSAIC recognises: single-agent Gymnasium, sequential (AEC)
+PettingZoo, and simultaneous (POSG) PettingZoo Parallel. It is
+independent of who controls the agents and of the underlying
+environment library.
+
+.. code-block:: python
+
+   from gym_gui.core.enums import SteppingParadigm
+
+   paradigm = SteppingParadigm.SEQUENTIAL
+   assert paradigm.value == "sequential"
+
 SteppingParadigm
-^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~
 
 .. autoclass:: gym_gui.core.enums.SteppingParadigm
    :members:
-   :undoc-members:
+
+Capability Descriptors
+----------------------
+
+:class:`~gym_gui.core.adapters.base.WorkerCapabilities` is a frozen
+dataclass that declares which stepping paradigms, environment types,
+and action or observation spaces a worker supports. The
+WorkerOrchestrator uses it to match environments to compatible workers
+before launching a run.
+
+.. code-block:: python
+
+   from gym_gui.core.adapters.base import WorkerCapabilities
+   from gym_gui.core.enums import SteppingParadigm
+
+   caps = WorkerCapabilities(
+       stepping_paradigm=SteppingParadigm.SINGLE_AGENT,
+       env_types=("gymnasium",),
+       action_spaces=("discrete", "continuous"),
+       max_agents=1,
+   )
+   assert caps.supports_paradigm(SteppingParadigm.SINGLE_AGENT)
+   assert caps.supports_env_type("gymnasium")
 
 WorkerCapabilities
-^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~
 
 .. autoclass:: gym_gui.core.adapters.base.WorkerCapabilities
    :members:
-   :undoc-members:
    :no-index:
 
 UI Widgets
@@ -27,10 +65,10 @@ UI Widgets
 .. note::
 
    Qt widget classes cannot be auto-documented by Sphinx in a headless
-   environment.  The API signatures below are maintained manually.
+   environment. The API signatures below are maintained manually.
 
 PlayerAssignmentPanel
-^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~
 
 .. py:class:: gym_gui.ui.widgets.operator_config_widget.PlayerAssignmentPanel(env_family, env_id, num_agents, agent_ids=None, agent_labels=None, parent=None)
 
@@ -55,11 +93,11 @@ PlayerAssignmentPanel
       Propagate the current list of vLLM servers to every row.
 
 PlayerAssignmentRow
-^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~
 
 .. py:class:: gym_gui.ui.widgets.operator_config_widget.PlayerAssignmentRow(player_id, player_label, parent=None)
 
-   Single row inside a :class:`PlayerAssignmentPanel`.  Exposes a
+   Single row inside a :class:`PlayerAssignmentPanel`. Exposes a
    **Type** dropdown (LLM / RL / Human / Random), a **Worker** dropdown,
    and type-specific settings (LLM provider/model, RL policy path, etc.).
 
@@ -71,15 +109,15 @@ PlayerAssignmentRow
    .. py:method:: get_assignment() -> WorkerAssignment
 
       Build and return a :class:`~gym_gui.services.operator.WorkerAssignment`
-      from the current UI state.  The ``Random`` type maps to
+      from the current UI state. The ``Random`` type maps to
       ``worker_type="random"`` and ``Passive`` maps to ``worker_type="passive"``.
 
 OperatorConfigWidget
-^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~
 
 .. py:class:: gym_gui.ui.widgets.operator_config_widget.OperatorConfigWidget(operator_id, parent=None)
 
-   Per-operator configuration widget.  For multi-agent environments it
+   Per-operator configuration widget. For multi-agent environments it
    creates a :class:`PlayerAssignmentPanel` and an environment-specific
    settings section (observation mode, coordination strategy for
    MultiGrid / MeltingPot).

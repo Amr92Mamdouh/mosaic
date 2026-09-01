@@ -61,6 +61,7 @@ dependency; install only the ones you need.
    :caption: JAX & Physics
 
    jumanji/index
+   craftax/index
    pybullet_drones/index
 
 .. toctree::
@@ -79,4 +80,4 @@ dependency; install only the ones you need.
    smac/index
    smacv2/index
    rware/index
-   hemac/index
+   gfootball/index

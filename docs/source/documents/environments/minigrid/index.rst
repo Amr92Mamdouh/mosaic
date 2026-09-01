@@ -3,10 +3,23 @@ MiniGrid
 
 Procedurally generated grid-world environments for navigation and reasoning.
 
-:Install: ``pip install -e ".[minigrid]"``
-:Paradigm: Single-agent
-:Stepping: ``SINGLE_AGENT``
-:Docs: `minigrid.farama.org <https://minigrid.farama.org/>`_
+.. list-table::
+   :widths: 20 80
+   :header-rows: 0
+
+   * - **Paradigm**
+     - Single-agent
+   * - **Stepping**
+     - ``SINGLE_AGENT``
+   * - **Docs**
+     - `minigrid.farama.org <https://minigrid.farama.org/>`_
+
+Installation
+------------
+
+.. code-block:: bash
+
+   pip install -e ".[minigrid]"
 
 .. raw:: html
 
@@ -21,7 +34,7 @@ MOSAIC supports **35 MiniGrid environments** across 9 task categories:
 Empty
 -----
 
-Navigate to a goal in an empty room.  The simplest MiniGrid tasks — good for
+Navigate to a goal in an empty room.  The simplest MiniGrid tasks, good for
 verifying your setup.
 
 .. list-table::

@@ -11,10 +11,16 @@ Toy Text
 
 Simple tabular environments useful for learning and debugging.
 
-:Install: ``pip install -e ".[gymnasium]"``
 :Paradigm: Single-agent
 :Stepping: ``SINGLE_AGENT``
 :Docs: `gymnasium.farama.org/environments/toy_text/ <https://gymnasium.farama.org/environments/toy_text/>`_
+
+Installation
+------------
+
+.. code-block:: bash
+
+   pip install -e ".[gymnasium]"
 
 .. list-table::
    :header-rows: 1

@@ -262,7 +262,7 @@ all installable extras.  Each extra maps to a set of PyPI packages:
    jumanji       = ["jax>=0.4.20", "jaxlib>=0.4.20", ...]
    pybullet-drones = ["pybullet>=3.2.5", ...]
    openspiel     = ["open-spiel>=1.4.0", "shimmy[openspiel]>=1.3.0"]
-   mosaic_multigrid = ["mosaic-multigrid==4.4.0"]
+   mosaic_multigrid = ["mosaic-multigrid==6.4.0"]
    multigrid_ini = ["gymnasium>=1.1.0", "pygame>=2.5.0"]
    meltingpot    = ["shimmy[meltingpot]>=1.3.0", ...]
    overcooked    = ["dill", "gymnasium>=1.1.0", ...]
@@ -904,6 +904,7 @@ Platform Guides
 
    ubuntu
    wsl
+   client_server_communications
    common_errors/index
 
 Next Steps

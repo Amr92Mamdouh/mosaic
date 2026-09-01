@@ -3,9 +3,21 @@ NetHack
 
 The full NetHack roguelike game via NLE.
 
-:Install: ``pip install -e ".[nethack]"``
-:Paradigm: Single-agent
-:Stepping: ``SINGLE_AGENT``
+.. list-table::
+   :widths: 20 80
+   :header-rows: 0
+
+   * - **Paradigm**
+     - Single-agent
+   * - **Stepping**
+     - ``SINGLE_AGENT``
+
+Installation
+------------
+
+.. code-block:: bash
+
+   pip install -e ".[nethack]"
 
 .. list-table::
    :header-rows: 1

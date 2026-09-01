@@ -4,9 +4,21 @@ OpenSpiel
 Board games via Google DeepMind's OpenSpiel + Shimmy PettingZoo wrapper.
 Includes custom draughts/checkers variants with proper international rules.
 
-:Install: ``pip install -e ".[openspiel]"``
-:Paradigm: Multi-agent (turn-based)
-:Stepping: ``SEQUENTIAL``
+.. list-table::
+   :widths: 20 80
+   :header-rows: 0
+
+   * - **Paradigm**
+     - Multi-agent (turn-based)
+   * - **Stepping**
+     - ``SEQUENTIAL``
+
+Installation
+------------
+
+.. code-block:: bash
+
+   pip install -e ".[openspiel]"
 
 .. list-table::
    :header-rows: 1

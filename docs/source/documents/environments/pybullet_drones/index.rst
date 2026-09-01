@@ -3,9 +3,21 @@ PyBullet Drones
 
 Quadcopter control environments with realistic physics simulation.
 
-:Install: ``pip install -e ".[pybullet-drones]"``
-:Paradigm: Single-agent / Multi-agent
-:Stepping: ``SINGLE_AGENT`` / ``SIMULTANEOUS``
+.. list-table::
+   :widths: 20 80
+   :header-rows: 0
+
+   * - **Paradigm**
+     - Single-agent / Multi-agent
+   * - **Stepping**
+     - ``SINGLE_AGENT`` / ``SIMULTANEOUS``
+
+Installation
+------------
+
+.. code-block:: bash
+
+   pip install -e ".[pybullet-drones]"
 
 .. list-table::
    :header-rows: 1
