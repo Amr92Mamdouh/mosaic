@@ -115,6 +115,24 @@ together to form a complete picture of agent performance.
           <p style="text-align:center; font-size:0.95em; color:#555; margin-top:6px;">
             <strong>MAPPO training on SMACv2</strong> via <code>xuance_worker</code> inside MOSAIC.
           </p>
+   * - .. raw:: html
+
+          <video style="width:100%; max-width:100%; height:auto; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.15);" controls autoplay muted loop playsinline>
+            <source src="https://github.com/user-attachments/assets/4644af3c-7e87-4ddc-a43b-df0ece99df9f?raw=true" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <p style="text-align:center; font-size:0.95em; color:#555; margin-top:6px;">
+            <strong>ViZDoom running inside MOSAIC</strong>: human-controlled player via keyboard, first-person 3D pixel observations.
+          </p>
+     - .. raw:: html
+
+          <video style="width:100%; max-width:100%; height:auto; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.15);" controls autoplay muted loop playsinline>
+            <source src="https://github.com/user-attachments/assets/586aed3c-45fd-446e-8eaf-c2fd472bca58?raw=true" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <p style="text-align:center; font-size:0.95em; color:#555; margin-top:6px;">
+            <strong>PPO_Clip training on ViZDoom-TakeCover-v0</strong> via <code>xuance_worker</code> inside MOSAIC.
+          </p>
 
 .. raw:: html
 
@@ -805,6 +823,9 @@ as teammates within heterogeneous teams.
 
 
 
+Evaluation Modes
+^^^^^^^^^^^^^^^^
+
 MOSAIC provides two evaluation modes designed for reproducibility:
 
 .. raw:: html
@@ -899,36 +920,49 @@ installation instructions, environment lists, and academic citations.
      - .. image:: images/envs/griddly/griddly.gif
           :width: 200px
      - | Human-Control: ✅
-       | Single-Agent: 📋
+       | Single-Agent: ✅
        | Multi-Agent: ✅
    * - :doc:`ViZDoom <documents/environments/vizdoom/index>`
      - Doom-based first-person visual RL
      - .. image:: images/envs/vizdoom/vizdoom.gif
           :width: 200px
      - | Human-Control: ✅
-       | Single-Agent: 📋
+       | Single-Agent: ✅
        | Multi-Agent: ❌
    * - :doc:`MiniHack <documents/environments/minihack/index>`
      - Roguelike sandbox built on NetHack (NLE)
      - .. image:: images/envs/minihack/minihack.gif
           :width: 200px
      - | Human-Control: ✅
-       | Single-Agent: 📋
+       | Single-Agent: ✅
        | Multi-Agent: ❌
    * - :doc:`NetHack <documents/environments/nethack/index>`
      - Full NetHack roguelike game via NLE
      - .. image:: images/envs/nethack/nethack.gif
           :width: 200px
      - | Human-Control: ✅
-       | Single-Agent: 📋
+       | Single-Agent: ✅
        | Multi-Agent: ❌
    * - :doc:`Crafter <documents/environments/crafter/index>`
      - Open-world survival benchmark
      - .. image:: images/envs/crafter/crafter.gif
           :width: 200px
      - | Human-Control: ✅
-       | Single-Agent: 📋
-       | Multi-Agent: ❌
+       | Single-Agent: ✅
+       | Multi-Agent: ✅
+   * - :doc:`Craftax <documents/environments/craftax/index>`
+     - JAX-accelerated open-world survival (Crafter-in-JAX, 22 achievements)
+     - .. raw:: html
+
+          <div id="craftax-cycler" style="width:200px;height:200px;position:relative;overflow:hidden;border-radius:4px;">
+            <img src="https://raw.githubusercontent.com/MichaelTMatthews/Craftax/main/images/archery.gif" style="width:200px;position:absolute;top:0;left:0;">
+            <img src="https://raw.githubusercontent.com/MichaelTMatthews/Craftax/main/images/building.gif" style="width:200px;position:absolute;top:0;left:0;display:none;">
+            <img src="https://raw.githubusercontent.com/MichaelTMatthews/Craftax/main/images/mining.gif" style="width:200px;position:absolute;top:0;left:0;display:none;">
+          </div>
+          <script>(function(){var c=document.getElementById('craftax-cycler'),imgs=c.querySelectorAll('img'),i=0;setInterval(function(){imgs[i].style.display='none';i=(i+1)%imgs.length;imgs[i].style.display='';},3000);})();</script>
+     - | Human-Control: ✅
+       | Single-Agent: ✅
+       | Multi-Agent: ✅
    * - :doc:`Procgen <documents/environments/procgen/index>`
      - 16 procedurally generated environments
      - .. image:: images/envs/procgen/coinrun.gif
